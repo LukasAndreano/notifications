@@ -1,0 +1,49 @@
+{
+  "name": "notifications",
+  "version": "1.0.1",
+  "private": true,
+  "dependencies": {
+    "@vkontakte/icons": "^1.118.0",
+    "@vkontakte/vk-bridge": "^2.4.6",
+    "@vkontakte/vk-miniapps-deploy": "^0.0.25",
+    "@vkontakte/vkui": "^4.12.3",
+    "cross-env": "^7.0.3",
+    "eruda": "^2.4.1",
+    "eruda-code": "^2.0.0",
+    "eruda-dom": "^2.0.0",
+    "query-string": "^4.3.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3"
+  },
+  "scripts": {
+    "start": "cross-env react-scripts start",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build -p",
+    "prettier": "npx prettier --write public && npx prettier --write src",
+    "predeploy": "npm run prettier && npm run build",
+    "deploy": "npm run predeploy && npm run vk-miniapps-deploy",
+    "vk-miniapps-deploy": "vk-miniapps-deploy"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "prettier": "^2.3.0"
+  }
+}

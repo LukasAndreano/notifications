@@ -1,0 +1,108 @@
+body {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.tw {
+  white-space: pre-wrap;
+}
+input,
+input:before,
+input:after {
+  -webkit-user-select: initial;
+  -khtml-user-select: initial;
+  -moz-user-select: initial;
+  -ms-user-select: initial;
+  user-select: initial;
+}
+.mb10 {
+  margin-bottom: -10px;
+}
+.vkuiEpic .vkuiSnackbar {
+  padding-bottom: 0 !important;
+}
+.TabbarItem__in:hover,
+.Switch:hover,
+.TabbarItem:hover,
+option:hover {
+  cursor: pointer;
+}
+.Radio,
+.vkuiFormItem .vkuiCell,
+.vkuiFormItem .vkuiSimpleCell,
+.vkuiFormItem .vkuiRichCell,
+.vkuiFormItem .vkuiCellButton,
+.vkuiFormItem .vkuiRadio,
+.vkuiFormItem .vkuiCheckbox {
+  border-radius: 8px;
+}
+.vkuiPanelHeader--android.vkuiPanelHeader--no-right
+  .vkuiPanelHeader__content
+  > *,
+.vkuiPanelHeader--vkcom.vkuiPanelHeader--no-right
+  .vkuiPanelHeader__content
+  > * {
+  padding-top: 5px !important;
+}
+.CellInCard {
+  padding: 10px;
+}
+.animatedButton {
+  border: none;
+  background: none;
+  padding: 0;
+  width: 100%;
+}
+.Link {
+  color: black !important;
+}
+.hide {
+  background-color: var(--button_secondary_background);
+  border-radius: 25px;
+  padding: 0 10px;
+  color: var(--button_secondary_foreground);
+  font-size: 15px;
+  font-weight: 600;
+}
+.tap:hover {
+  cursor: pointer;
+}
+.vkuiCardScroll__gap {
+  display: none !important;
+}
+.ml10 {
+  margin-left: 0px !important;
+}
+.vkuiSimpleCell {
+  border-radius: 8px !important;
+}
+img {
+  width: 100%;
+}
+a,
+a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+.fixButton,
+.fixButton:hover,
+.fixButton:active {
+  text-decoration: none;
+  color: var(--button_secondary_foreground);
+}
+.fixButton2,
+.fixButton2:hover,
+.fixButton2:active {
+  text-decoration: none;
+  color: var(--button_primary_foreground);
+}
+.switchEl {
+  pointer-events: none;
+}
+.snackBar-fix {
+  margin-bottom: 50px;
+  z-index: 2;
+}
