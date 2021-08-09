@@ -1,0 +1,22 @@
+{
+  "name": "notifications",
+  "version": "1.0.0",
+  "description": "notifications app API",
+  "main": "index.js",
+  "scripts": {
+    "prettier": "npx prettier --write routes && npx prettier --write index.js && npx prettier --write config.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/hapi": "^20.1.5",
+    "crypto": "^1.0.1",
+    "fetch": "^1.1.0",
+    "hapi-plugin-mysql": "^7.2.4",
+    "tiktok-scraper": "^1.4.35",
+    "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "prettier": "^2.3.2"
+  }
+}

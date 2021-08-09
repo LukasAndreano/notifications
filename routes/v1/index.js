@@ -1,0 +1,19 @@
+module.exports = [].concat(
+  require("./init"),
+  require("./loadServices"),
+  require("./getProfile"),
+  require("./sendRequest"),
+  require("./getContentMakerServices"),
+  require("./loadNotifications"),
+  require("./getStatusOfNotifications"),
+  require("./enableNotificationsFromGroup"),
+  require("./disableNotificationsFromGroup"),
+  require("./enableNotificationsFromApp"),
+  require("./disableNotificationsFromApp"),
+  require("./loadFeed"),
+  require("./setLink"),
+  require("./startMailing"),
+  require("./getRating"),
+  require("./connectService"),
+  require("./disableService")
+);
