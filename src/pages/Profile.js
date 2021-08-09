@@ -26,7 +26,6 @@ import {
   Icon28MailOutline,
 } from "@vkontakte/icons";
 import fetch2 from "../components/Fetch";
-import isset from "../components/Isset";
 
 /*eslint eqeqeq: "off"*/
 export default function Profile(props) {
@@ -54,14 +53,14 @@ export default function Profile(props) {
         clearTimeout(timeout);
       } else {
         fetch2("getProfile").then((data) => {
-          if (isset(data.result.data)) {
+          if (data.response !== false && data.response.length !== 0) {
             setData({
-              pro: data.result.data.pro,
-              status: data.result.data.status,
+              pro: data.response.pro,
+              status: data.response.status,
             });
-            localStorage.setItem("profile", JSON.stringify(data.result.data));
-            if (data.result.data.status == 1)
-              localStorage.setItem("link", data.result.link);
+            localStorage.setItem("profile", JSON.stringify(data.response));
+            if (data.response.status == 1)
+              localStorage.setItem("link", data.response.link);
             setTimeout(() => setLoaded(true), 100);
             clearTimeout(timeout);
           } else {

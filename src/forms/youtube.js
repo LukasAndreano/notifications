@@ -28,7 +28,7 @@ export default function YouTube(props) {
             fetch2("connectService", "id=2&channel=" + encodeURI(channel)).then(
               (data) => {
                 setDisabled(false);
-                if (data.result.status === "ok") {
+                if (data.response) {
                   props.setSnackbar(
                     <Snackbar
                       layout="vertical"
@@ -38,7 +38,7 @@ export default function YouTube(props) {
                         bridge.send("VKWebAppShowWallPostBox", {
                           message:
                             "Я получаю уведомления от канала «" +
-                            data.result.channel +
+                            data.channel +
                             "», получай и ты!\n\nvk.com/app7915893",
                         })
                       }
@@ -53,17 +53,17 @@ export default function YouTube(props) {
                         </Avatar>
                       }
                     >
-                      Уведомления от этого канала включены!
+                      Уведомления от канала «{data.channel}» включены!
                     </Snackbar>
                   );
                   localStorage.removeItem("subscriptions");
                   props.setActiveModal(null);
-                } else if (data.result.status === "already_enabled") {
+                } else if (data.message === "already_enabled") {
                   props.openAction(
                     "Остановитесь!",
                     "Вы уже получаете уведомления от этого канала."
                   );
-                } else if (data.result.status === "not_found") {
+                } else if (data.message === "not_found") {
                   props.openAction(
                     "Ошибка!",
                     "Такого канала нет на платформе YouTube."

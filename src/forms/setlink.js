@@ -35,7 +35,7 @@ export default function SetLink(props) {
           if (!disabled) {
             fetch2("setLink", "tag=" + encodeURI(tag)).then((data) => {
               setDisabled(false);
-              if (data.result === "ok") {
+              if (data.response) {
                 bridge.send("VKWebAppCopyText", {
                   text: "https://vk.com/app7915893#" + tag,
                 });
@@ -45,7 +45,7 @@ export default function SetLink(props) {
                 );
                 localStorage.setItem("link", tag);
                 props.setActiveModal(null);
-              } else if (data.result === "already_setted") {
+              } else if (data.message === "already_setted") {
                 props.openAction(
                   "Уведомление",
                   "Такая ссылка уже существует. Придумайте что-нибудь другое."

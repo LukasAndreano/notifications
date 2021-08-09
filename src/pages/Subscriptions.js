@@ -15,7 +15,6 @@ import {
   Icon28SettingsOutline,
 } from "@vkontakte/icons";
 import fetch2 from "../components/Fetch";
-import isset from "../components/Isset";
 
 /*eslint eqeqeq: "off"*/
 
@@ -71,13 +70,13 @@ export default function Subscriptions(props) {
       }, 400);
       setUpdated(true);
       fetch2("loadNotifications").then((data) => {
-        if (isset(data.result.nofitications)) {
-          render(data.result.nofitications);
+        if (data.response !== false) {
+          render(data.response.notifications);
           localStorage.setItem(
             "subscriptions",
-            JSON.stringify(data.result.nofitications)
+            JSON.stringify(data.response.notifications)
           );
-          localStorage.setItem("settings", JSON.stringify(data.result.user));
+          localStorage.setItem("settings", JSON.stringify(data.response.user));
         } else {
           setLoaded(true);
         }
@@ -110,26 +109,26 @@ export default function Subscriptions(props) {
           } else {
             fetch2("getStatusOfNotifications").then((data) => {
               setSettings({
-                group_notifications: data.result.group_notifications,
-                notifications: data.result.notifications,
+                group_notifications: data.response.group_notifications,
+                notifications: data.response.notifications,
               });
-              localStorage.setItem("settings", JSON.stringify(data.result));
+              localStorage.setItem("settings", JSON.stringify(data.response));
               render(JSON.parse(localStorage.getItem("subscriptions")));
               clearTimeout(timeout);
             });
           }
         } else {
           fetch2("loadNotifications").then((data) => {
-            if (isset(data.result.nofitications)) {
-              render(data.result.nofitications);
+            if (data.response !== false) {
+              render(data.response.notifications);
               clearTimeout(timeout);
               localStorage.setItem(
                 "subscriptions",
-                JSON.stringify(data.result.nofitications)
+                JSON.stringify(data.response.notifications)
               );
               localStorage.setItem(
                 "settings",
-                JSON.stringify(data.result.user)
+                JSON.stringify(data.response.user)
               );
             } else {
               setLoaded(true);

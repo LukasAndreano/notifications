@@ -27,7 +27,7 @@ export default function Twitch(props) {
           if (!disabled) {
             fetch2("connectService", "id=1&channel=" + channel).then((data) => {
               setDisabled(false);
-              if (data.result === "ok") {
+              if (data.response) {
                 props.setSnackbar(
                   <Snackbar
                     layout="vertical"
@@ -54,12 +54,12 @@ export default function Twitch(props) {
                 );
                 localStorage.removeItem("subscriptions");
                 props.setActiveModal(null);
-              } else if (data.result === "already_enabled") {
+              } else if (data.message === "already_enabled") {
                 props.openAction(
                   "Остановитесь!",
                   "Вы уже получаете уведомления от этого пользователя."
                 );
-              } else if (data.result === "not_found") {
+              } else if (data.message === "not_found") {
                 props.openAction(
                   "Ошибка!",
                   "Такого пользователя нет на платформе Twitch."

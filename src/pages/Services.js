@@ -8,7 +8,6 @@ import {
   Footer,
 } from "@vkontakte/vkui";
 import fetch2 from "../components/Fetch";
-import isset from "../components/Isset";
 
 export default function Services(props) {
   const [loaded, setLoaded] = useState(false);
@@ -27,7 +26,7 @@ export default function Services(props) {
           key={el.id}
           before={<Avatar size={48} mode="app" src={el.img} />}
           caption={el.description}
-          onClick={() => props.setActiveModal(el.id, { img: el.img })}
+          onClick={() => props.setActiveModal(String(el.id), { img: el.img })}
         >
           {el.name}
         </RichCell>
@@ -54,9 +53,9 @@ export default function Services(props) {
       } else {
         clearTimeout(timeout);
         fetch2("loadServices").then((data) => {
-          if (isset(data.result)) {
-            render(data.result);
-            localStorage.setItem("services", JSON.stringify(data.result));
+          if (data.response !== false && data.response.length !== 0) {
+            render(data.response);
+            localStorage.setItem("services", JSON.stringify(data.response));
           }
         });
       }

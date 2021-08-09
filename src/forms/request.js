@@ -42,7 +42,7 @@ export default function Request(props) {
                 encodeURI(description)
             ).then((data) => {
               setDisabled(false);
-              if (data.result === "ok") {
+              if (data.response) {
                 localStorage.setItem("request", true);
                 props.openAction(
                   "Заявка принята!",

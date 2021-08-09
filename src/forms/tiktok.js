@@ -28,7 +28,7 @@ export default function TikTok(props) {
             fetch2("connectService", "id=3&channel=" + encodeURI(channel)).then(
               (data) => {
                 setDisabled(false);
-                if (data.result === "ok") {
+                if (data.response) {
                   props.setSnackbar(
                     <Snackbar
                       layout="vertical"
@@ -58,12 +58,12 @@ export default function TikTok(props) {
                   );
                   localStorage.removeItem("subscriptions");
                   props.setActiveModal(null);
-                } else if (data.result === "already_enabled") {
+                } else if (data.message === "already_enabled") {
                   props.openAction(
                     "Остановитесь!",
                     "Вы уже получаете уведомления от этого пользователя."
                   );
-                } else if (data.result === "not_found") {
+                } else if (data.message === "not_found") {
                   props.openAction(
                     "Ошибка!",
                     "Такого пользователя нет в TikTok или его аккаунт пуст."

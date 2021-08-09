@@ -46,7 +46,7 @@ export default function ContentMakerServices(props) {
                   "connectService",
                   "id=" + el.id + "&channel=" + el.channel + "&useTag=true"
                 ).then((data) => {
-                  if (data.result === "ok") {
+                  if (data.response) {
                     localStorage.removeItem("subscriptions");
                     let ids_array = ids.push(el.id);
                     setIds(ids_array);
@@ -72,7 +72,7 @@ export default function ContentMakerServices(props) {
                         Сервис добавлен в Ваши подписки
                       </Snackbar>
                     );
-                  } else if (data.result === "already_enabled") {
+                  } else if (data.message === "already_enabled") {
                     props.openAction(
                       "Уведомление",
                       "Вы уже получаете уведомления от этого пользователя."

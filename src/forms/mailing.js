@@ -34,7 +34,7 @@ export default function Mailing(props) {
           if (!disabled) {
             fetch2("startMailing", "&text=" + encodeURI(text)).then((data) => {
               setDisabled(false);
-              if (data.result === "ok") {
+              if (data.response) {
                 props.openAction(
                   "Уведомление",
                   "Мы поместили Вашу рассылку в очередь. Через 30-60 секунд подписчики получат уведомление. Если в сообщении менее 254 символов, то рассылка придёт еще и в «Колокольчик»."

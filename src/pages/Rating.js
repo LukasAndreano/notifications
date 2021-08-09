@@ -17,7 +17,6 @@ import {
   Icon56Stars3Outline,
 } from "@vkontakte/icons";
 import fetch2 from "../components/Fetch";
-import isset from "../components/Isset";
 
 export default function Feed(props) {
   const [loaded, setLoaded] = useState(false);
@@ -38,7 +37,7 @@ export default function Feed(props) {
     let arr2 = [];
     let arr3 = [];
     let i = 1;
-    data.result.youtube.forEach((el) => {
+    data.response.youtube.forEach((el) => {
       arr.push(
         <a
           href={"https://www.youtube.com/channel/" + el.data}
@@ -58,7 +57,7 @@ export default function Feed(props) {
       i = i + 1;
     });
     i = 1;
-    data.result.twitch.forEach((el) => {
+    data.response.twitch.forEach((el) => {
       arr2.push(
         <a
           href={"https://twitch.tv/" + el.description}
@@ -78,7 +77,7 @@ export default function Feed(props) {
       i = i + 1;
     });
     i = 1;
-    data.result.tiktok.forEach((el) => {
+    data.response.tiktok.forEach((el) => {
       arr3.push(
         <a
           href={"https://www.tiktok.com/@" + el.description}
@@ -143,7 +142,7 @@ export default function Feed(props) {
         setLoaded(true);
       } else {
         fetch2("getRating").then((data) => {
-          if (isset(data.result)) {
+          if (data.response !== false) {
             render(data);
             localStorage.setItem("rating", JSON.stringify(data));
             clearTimeout(timeout);
@@ -166,7 +165,7 @@ export default function Feed(props) {
               onClick={() => {
                 setDisabled(true);
                 fetch2("getRating").then((data) => {
-                  if (isset(data.result)) {
+                  if (data.response !== false) {
                     render(data, true);
                     localStorage.setItem("rating", JSON.stringify(data));
                     setTimeout(() => setDisabled(false), 3000);

@@ -60,9 +60,9 @@ export default function Settings(props) {
                       group_id: 206215182,
                     })
                     .then((data) => {
-                      if (data.result === true) {
+                      if (data.response) {
                         fetch2("enableNotificationsFromGroup").then((data) => {
-                          if (data.result === "ok") {
+                          if (data.response) {
                             if (props.tour === 3) {
                               setTimeout(
                                 () => props.setActiveModal("tour4"),
@@ -82,7 +82,7 @@ export default function Settings(props) {
                     });
                 } else {
                   fetch2("disableNotificationsFromGroup").then((data) => {
-                    if (data.result === "ok") {
+                    if (data.response) {
                       setSwitchLoaded1(false);
                       localStorage.removeItem("settings");
                       setSettings({
@@ -111,9 +111,9 @@ export default function Settings(props) {
               onClick={() => {
                 if (settings.notifications == 0) {
                   bridge.send("VKWebAppAllowNotifications").then((data) => {
-                    if (data.result === true) {
+                    if (data.response) {
                       fetch2("enableNotificationsFromApp").then((data) => {
-                        if (data.result === "ok") {
+                        if (data.response) {
                           if (props.tour === 3) {
                             setTimeout(
                               () => props.setActiveModal("tour4"),
@@ -133,7 +133,7 @@ export default function Settings(props) {
                   });
                 } else {
                   fetch2("disableNotificationsFromApp").then((data) => {
-                    if (data.result === "ok") {
+                    if (data.response) {
                       setSwitchLoaded2(false);
                       localStorage.removeItem("settings");
                       setSettings({

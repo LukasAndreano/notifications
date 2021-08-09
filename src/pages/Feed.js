@@ -15,7 +15,6 @@ import {
   Icon16Done,
 } from "@vkontakte/icons";
 import fetch2 from "../components/Fetch";
-import isset from "../components/Isset";
 
 export default function Feed(props) {
   const [loaded, setLoaded] = useState(false);
@@ -82,9 +81,9 @@ export default function Feed(props) {
         clearTimeout(timeout);
       } else {
         fetch2("loadFeed").then((data) => {
-          if (isset(data.result)) {
-            render(data.result);
-            localStorage.setItem("feed", JSON.stringify(data.result));
+          if (data.response !== false && data.response.length !== 0) {
+            render(data.response);
+            localStorage.setItem("feed", JSON.stringify(data.response));
             clearTimeout(timeout);
           } else {
             setLoaded(true);
@@ -100,8 +99,8 @@ export default function Feed(props) {
             "getContentMakerServices",
             "tag=" + window.location.hash.substr(1)
           ).then((data) => {
-            if (data.result !== "not_found" && data.result.length !== 0)
-              props.setActiveModal("contentMakerServices", null, data.result);
+            if (data.response !== "not_found" && data.response.length !== 0)
+              props.setActiveModal("contentMakerServices", null, data.response);
           });
         }
       }
@@ -119,9 +118,9 @@ export default function Feed(props) {
               onClick={() => {
                 setDisabled(true);
                 fetch2("loadFeed").then((data) => {
-                  if (isset(data.result)) {
-                    render(data.result, true);
-                    localStorage.setItem("feed", JSON.stringify(data.result));
+                  if (data.response !== false && data.response.length !== 0) {
+                    render(data.response, true);
+                    localStorage.setItem("feed", JSON.stringify(data.response));
                     setTimeout(() => setDisabled(false), 3000);
                   }
                 });

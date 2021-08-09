@@ -741,7 +741,7 @@ const App = withAdaptivity(
                   "disableService",
                   "id=" + data.service_id + "&data=" + data.data
                 ).then((data2) => {
-                  if (data2.result === "ok") {
+                  if (data2.response) {
                     setUpdated(true);
                     setTimeout(() => setUpdated(false), 100);
                     setSnackbar(
@@ -762,7 +762,7 @@ const App = withAdaptivity(
                         Уведомления от «{data.name}» отключены.
                       </Snackbar>
                     );
-                  } else if (data2.result === "already_deleted") {
+                  } else if (data2.message === "already_deleted") {
                     setUpdated(true);
                     setTimeout(() => setUpdated(false), 100);
                     openAction(

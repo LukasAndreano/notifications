@@ -25,8 +25,8 @@ localStorage.clear();
 const getParams = queryString.parse(window.location.search);
 localStorage.setItem("favorites", getParams.vk_is_favorite);
 
-fetch2("sign").then((data) => {
-  if (data.result === "ok") {
+fetch2("init").then((data) => {
+  if (data.response) {
     setTimeout(() => {
       const newColorScheme = window.matchMedia("(prefers-color-scheme: dark)")
         .matches

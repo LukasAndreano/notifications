@@ -1,14 +1,18 @@
-export default async function fetch2(method, params) {
-  let fetch_params = params || "";
+export default async function fetch2(method, params = null) {
   const data = await fetch(
-    "https://cloud.lukass.ru/notifications/api" +
+    "https://notifications.lukass.ru/v1/" +
+      method +
       "?" +
       window.location.href.slice(window.location.href.indexOf("?") + 1),
     {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: "method=" + method + "&" + fetch_params,
+      body: params,
     }
-  );
-  return await data.json();
+  )
+    .then((data) => data.json())
+    .then((res) => {
+      return res;
+    });
+  return data;
 }
