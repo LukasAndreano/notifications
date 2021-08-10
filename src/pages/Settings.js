@@ -60,7 +60,7 @@ export default function Settings(props) {
                       group_id: 206215182,
                     })
                     .then((data) => {
-                      if (data.response) {
+                      if (data.result) {
                         fetch2("enableNotificationsFromGroup").then((data) => {
                           if (data.response) {
                             if (props.tour === 3) {
@@ -111,7 +111,7 @@ export default function Settings(props) {
               onClick={() => {
                 if (settings.notifications == 0) {
                   bridge.send("VKWebAppAllowNotifications").then((data) => {
-                    if (data.response) {
+                    if (data.result) {
                       fetch2("enableNotificationsFromApp").then((data) => {
                         if (data.response) {
                           if (props.tour === 3) {

@@ -6,6 +6,7 @@ import {
   Group,
   FormItem,
   Input,
+  Footer,
   Snackbar,
   Avatar,
 } from "@vkontakte/vkui";
@@ -19,7 +20,7 @@ export default function Twitch(props) {
   const [disabled, setDisabled] = useState(false);
 
   return (
-    <Group style={{ marginTop: -35 }}>
+    <Group style={{ marginTop: -45 }}>
       <FormLayout
         onSubmit={(e) => {
           e.preventDefault();
@@ -92,6 +93,7 @@ export default function Twitch(props) {
           </Button>
         </FormItem>
       </FormLayout>
+      <Footer style={{paddingLeft: 10, paddingRight: 10, marginTop: 0}}>Подсказка: регистр не имеет значения.<br/>Например, Вы можете ввести пользователя Sfory в ином регистре: sFoRY.</Footer>
     </Group>
   );
 }

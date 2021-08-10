@@ -6,6 +6,7 @@ import {
   Group,
   FormItem,
   Input,
+  Footer,
   Snackbar,
   Avatar,
 } from "@vkontakte/vkui";
@@ -19,7 +20,7 @@ export default function YouTube(props) {
   const [disabled, setDisabled] = useState(false);
 
   return (
-    <Group style={{ marginTop: -35 }}>
+    <Group style={{ marginTop: -45 }}>
       <FormLayout
         onSubmit={(e) => {
           e.preventDefault();
@@ -97,6 +98,7 @@ export default function YouTube(props) {
           </Button>
         </FormItem>
       </FormLayout>
+      <Footer style={{paddingLeft: 10, paddingRight: 10, marginTop: 0}}>Подсказка: в адресе не должно быть лишних путей. Например, если вы введетё .../UC1XLQIzXJd_KaLOuEVFESVw/featured, а не .../UC1XLQIzXJd_KaLOuEVFESVw, то Вы получите ошибку.</Footer>
     </Group>
   );
 }

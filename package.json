@@ -5,7 +5,7 @@
   "dependencies": {
     "@vkontakte/icons": "^1.118.0",
     "@vkontakte/vk-bridge": "^2.4.6",
-    "@vkontakte/vkui": "^4.12.3",
+    "@vkontakte/vkui": "^4.12.4",
     "cross-env": "^7.0.3",
     "eruda": "^2.4.1",
     "eruda-code": "^2.0.0",

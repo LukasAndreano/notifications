@@ -797,7 +797,6 @@ const App = withAdaptivity(
                   ""
                 ) : (
                   <PanelHeaderButton
-                    style={{ marginRight: 10 }}
                     onClick={() => setActiveModal(null)}
                   >
                     <Icon24Dismiss />
@@ -832,7 +831,6 @@ const App = withAdaptivity(
                   ""
                 ) : (
                   <PanelHeaderButton
-                    style={{ marginRight: 10 }}
                     onClick={() => setActiveModal(null)}
                   >
                     <Icon24Dismiss />
@@ -861,7 +859,6 @@ const App = withAdaptivity(
                   ""
                 ) : (
                   <PanelHeaderButton
-                    style={{ marginRight: 10 }}
                     onClick={() => setActiveModal(null)}
                   >
                     <Icon24Dismiss />
@@ -890,7 +887,6 @@ const App = withAdaptivity(
                   ""
                 ) : (
                   <PanelHeaderButton
-                    style={{ marginRight: 10 }}
                     onClick={() => setActiveModal(null)}
                   >
                     <Icon24Dismiss />
@@ -919,7 +915,6 @@ const App = withAdaptivity(
                   ""
                 ) : (
                   <PanelHeaderButton
-                    style={{ marginRight: 10 }}
                     onClick={() => setActiveModal(null)}
                   >
                     <Icon24Dismiss />
@@ -940,6 +935,7 @@ const App = withAdaptivity(
           onClose={() => {
             setActiveModal(null);
           }}
+          settlingHeight={100}
           header={
             <ModalPageHeader
               right={
@@ -947,7 +943,6 @@ const App = withAdaptivity(
                   ""
                 ) : (
                   <PanelHeaderButton
-                    style={{ marginRight: 10 }}
                     onClick={() => setActiveModal(null)}
                   >
                     <Icon24Dismiss />
@@ -962,7 +957,7 @@ const App = withAdaptivity(
         >
           <Placeholder
             style={{ marginTop: -40 }}
-            icon={<Avatar mode="app" src={data.img} size={96} />}
+            icon={<Avatar mode="app" src={data.img} size={72} />}
             header="Подключение Twitch"
           >
             Для подключения уведомлений введите имя пользователя, которого Вы
@@ -981,6 +976,7 @@ const App = withAdaptivity(
           onClose={() => {
             setActiveModal(null);
           }}
+          settlingHeight={100}
           header={
             <ModalPageHeader
               right={
@@ -988,7 +984,6 @@ const App = withAdaptivity(
                   ""
                 ) : (
                   <PanelHeaderButton
-                    style={{ marginRight: 10 }}
                     onClick={() => setActiveModal(null)}
                   >
                     <Icon24Dismiss />
@@ -1003,7 +998,7 @@ const App = withAdaptivity(
         >
           <Placeholder
             style={{ marginTop: -40 }}
-            icon={<Avatar mode="app" src={data.img} size={96} />}
+            icon={<Avatar mode="app" src={data.img} size={72} />}
             header="Подключение YouTube"
           >
             Для подключения уведомлений введите ссылку на канал пользователя,
@@ -1022,6 +1017,7 @@ const App = withAdaptivity(
           onClose={() => {
             setActiveModal(null);
           }}
+          settlingHeight={100}
           header={
             <ModalPageHeader
               right={
@@ -1029,7 +1025,6 @@ const App = withAdaptivity(
                   ""
                 ) : (
                   <PanelHeaderButton
-                    style={{ marginRight: 10 }}
                     onClick={() => setActiveModal(null)}
                   >
                     <Icon24Dismiss />
@@ -1044,7 +1039,7 @@ const App = withAdaptivity(
         >
           <Placeholder
             style={{ marginTop: -40 }}
-            icon={<Avatar mode="app" src={data.img} size={96} />}
+            icon={<Avatar mode="app" src={data.img} size={72} />}
             header="Подключение TikTok"
           >
             Для подключения уведомлений введите тег пользователя, которого Вы
@@ -1166,7 +1161,7 @@ const App = withAdaptivity(
                     </Cell>
                   </Group>
                   <Footer style={{ marginTop: -10 }}>
-                    Версия приложения: 1.0.0 <br />
+                    Версия приложения: 1.0.2 <br />
                     Разработчик:{" "}
                     <a
                       href="https://vk.com/id172118960"
