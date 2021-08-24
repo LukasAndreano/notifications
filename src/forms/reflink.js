@@ -16,11 +16,11 @@ export default function RefLink(props) {
   const [text, setText] = useState("https://vk.com/app7915893#" + props.link);
 
   return (
-    <Group style={{ marginTop: -35 }}>
+    <Group>
       <Placeholder
         icon={<Icon56ChainOutline />}
         header="Это Ваша ссылка"
-        style={{ marginBottom: -30 }}
+        style={{ marginBottom: -30, marginTop: -30 }}
       >
         Перейдя по ней пользователю будет предложено подписаться на один или
         несколько сервисов, которые Вы указали в заявке на получение прав
@@ -56,7 +56,10 @@ export default function RefLink(props) {
           <Button
             size="l"
             stretched
-            onClick={() => props.setActiveModal("setLink")}
+            onClick={() => {
+              props.setActiveModal(null);
+              setTimeout(() => props.setActiveModal("setLink"), 500);
+            }}
           >
             Пересоздать ссылку
           </Button>

@@ -18,11 +18,11 @@ export default function SetLink(props) {
   const [disabled, setDisabled] = useState(false);
 
   return (
-    <Group style={{ marginTop: -35 }}>
+    <Group>
       <Placeholder
         icon={<Icon56NotePenOutline />}
         header="Создание ссылки"
-        style={{ marginBottom: -30 }}
+        style={{ marginBottom: -30, marginTop: -30 }}
       >
         Контент-мейкеры могут создавать собственные ссылки, перейдя по которым
         пользователю будет предложено подписаться на один или несколько

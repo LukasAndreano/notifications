@@ -5,6 +5,7 @@ import {
   Button,
   Group,
   FormItem,
+  Placeholder,
   Input,
   Footer,
   Snackbar,
@@ -16,11 +17,24 @@ import { Icon16Done } from "@vkontakte/icons";
 import fetch2 from "../components/Fetch";
 
 export default function YouTube(props) {
-  const [channel, setChannel] = useState("");
+  const [channel, setChannel] = useState(
+    props.channel_id !== null && props.channel_id !== undefined
+      ? props.channel_id
+      : ""
+  );
   const [disabled, setDisabled] = useState(false);
 
   return (
-    <Group style={{ marginTop: -45 }}>
+    <Group>
+      <Placeholder
+        style={{ marginTop: -30, marginBottom: -30 }}
+        className="serviceCard"
+        icon={<Avatar mode="app" src={props.img} size={72} />}
+        header="Подключение YouTube"
+      >
+        Для подключения уведомлений введите ссылку на канал пользователя,
+        которого Вы хотите отслеживать.
+      </Placeholder>
       <FormLayout
         onSubmit={(e) => {
           e.preventDefault();
@@ -59,6 +73,11 @@ export default function YouTube(props) {
                   );
                   localStorage.removeItem("subscriptions");
                   props.setActiveModal(null);
+                } else if (data.message === "limit") {
+                  props.openAction(
+                    "Ошибка!",
+                    "Пользователи без подписки могут подключить максимум три сервиса."
+                  );
                 } else if (data.message === "already_enabled") {
                   props.openAction(
                     "Остановитесь!",
@@ -98,7 +117,11 @@ export default function YouTube(props) {
           </Button>
         </FormItem>
       </FormLayout>
-      <Footer style={{paddingLeft: 10, paddingRight: 10, marginTop: 0}}>Подсказка: в адресе не должно быть лишних путей. Например, если вы введетё .../UC1XLQIzXJd_KaLOuEVFESVw/featured, а не .../UC1XLQIzXJd_KaLOuEVFESVw, то Вы получите ошибку.</Footer>
+      <Footer style={{ paddingLeft: 10, paddingRight: 10, marginTop: 0 }}>
+        Подсказка: в адресе не должно быть лишних путей. Например, если вы
+        введетё .../UC1XLQIzXJd_KaLOuEVFESVw/featured, а не
+        .../UC1XLQIzXJd_KaLOuEVFESVw, то Вы получите ошибку.
+      </Footer>
     </Group>
   );
 }

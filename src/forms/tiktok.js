@@ -7,6 +7,7 @@ import {
   FormItem,
   Input,
   Snackbar,
+  Placeholder,
   Footer,
   Avatar,
 } from "@vkontakte/vkui";
@@ -16,11 +17,22 @@ import { Icon16Done } from "@vkontakte/icons";
 import fetch2 from "../components/Fetch";
 
 export default function TikTok(props) {
-  const [channel, setChannel] = useState("");
+  const [channel, setChannel] = useState(
+    props.channel !== null && props.channel !== undefined ? props.channel : ""
+  );
   const [disabled, setDisabled] = useState(false);
 
   return (
-    <Group style={{ marginTop: -45 }}>
+    <Group>
+      <Placeholder
+        className="serviceCard"
+        style={{ marginTop: -30, marginBottom: -30 }}
+        icon={<Avatar mode="app" src={props.img} size={72} />}
+        header="Подключение TikTok"
+      >
+        Для подключения уведомлений введите тег пользователя, которого Вы хотите
+        отслеживать.
+      </Placeholder>
       <FormLayout
         onSubmit={(e) => {
           e.preventDefault();
@@ -64,6 +76,11 @@ export default function TikTok(props) {
                     "Остановитесь!",
                     "Вы уже получаете уведомления от этого пользователя."
                   );
+                } else if (data.message === "limit") {
+                  props.openAction(
+                    "Ошибка!",
+                    "Пользователи без подписки могут подключить максимум три сервиса."
+                  );
                 } else if (data.message === "not_found") {
                   props.openAction(
                     "Ошибка!",
@@ -98,7 +115,12 @@ export default function TikTok(props) {
           </Button>
         </FormItem>
       </FormLayout>
-      <Footer style={{paddingLeft: 10, paddingRight: 10, marginTop: 0}}>Подсказка: регистр не имеет значения.<br/>Например, Вы можете ввести пользователя klavacoca в ином регистре: kLAvAcOCA.</Footer>
+      <Footer style={{ paddingLeft: 10, paddingRight: 10, marginTop: 0 }}>
+        Подсказка: регистр не имеет значения.
+        <br />
+        Например, Вы можете ввести пользователя klavacoca в ином регистре:
+        kLAvAcOCA.
+      </Footer>
     </Group>
   );
 }

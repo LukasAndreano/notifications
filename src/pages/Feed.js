@@ -31,15 +31,23 @@ export default function Feed(props) {
     let i = 0;
     data.forEach((el) => {
       arr.push(
-        <a href={el.link} key={i} target="_blank" rel="noreferrer">
-          <RichCell
-            before={<Avatar size={48} mode="app" src={el.img} />}
-            caption={el.description}
-            after={el.time}
-          >
-            {el.message}
-          </RichCell>
-        </a>
+        <RichCell
+          key={i}
+          onClick={() => {
+            props.setActiveModal("wallEvent", {
+              img: el.img,
+              header: el.message,
+              subheader: el.description,
+              time: el.time,
+            });
+          }}
+          className="serviceCard"
+          before={<Avatar size={48} mode="app" src={el.img} />}
+          caption={el.description}
+          after={el.time}
+        >
+          {el.message}
+        </RichCell>
       );
       i = i + 1;
     });
@@ -90,19 +98,6 @@ export default function Feed(props) {
             setUpdated(false);
           }
         });
-        if (
-          window.location.hash !== null &&
-          window.location.hash !== undefined &&
-          window.location.hash !== ""
-        ) {
-          fetch2(
-            "getContentMakerServices",
-            "tag=" + window.location.hash.substr(1)
-          ).then((data) => {
-            if (data.response !== "not_found" && data.response.length !== 0)
-              props.setActiveModal("contentMakerServices", null, data.response);
-          });
-        }
       }
     }
   }, [loaded, render, updated, props]);

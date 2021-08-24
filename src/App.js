@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import bridge from "@vkontakte/vk-bridge";
 import {
   SplitLayout,
@@ -7,7 +7,6 @@ import {
   View,
   PanelHeader,
   Panel,
-  Placeholder,
   Tabbar,
   TabbarItem,
   Epic,
@@ -29,6 +28,7 @@ import {
 } from "@vkontakte/vkui";
 
 import {
+  Icon56DonateOutline,
   Icon24Dismiss,
   Icon28Notifications,
   Icon28ServicesOutline,
@@ -52,7 +52,6 @@ import Settings from "./pages/Settings";
 import Feed from "./pages/Feed";
 import Rating from "./pages/Rating";
 import Profile from "./pages/Profile";
-import FAQ from "./pages/FAQ";
 
 import Twitch from "./forms/twitch";
 import YouTube from "./forms/youtube";
@@ -85,15 +84,33 @@ const STORAGE_KEYS = {
 const App = withAdaptivity(
   ({ viewWidth }) => {
     const platform = usePlatform();
-    const [activeStory, setActiveStory] = useState("feed");
+    const [activeStory, setActiveStory] = useState(
+      window.location.hash !== null &&
+        window.location.hash !== undefined &&
+        window.location.hash !== ""
+        ? "subscriptions"
+        : "feed"
+    );
     const isDesktop = viewWidth >= 3;
     const hasHeader = platform !== VKCOM;
     const [popout, setPopout] = useState(null);
     const [loaded, setLoaded] = useState(false);
     const [activeModal, setModal] = useState(null);
     const [modalHistory, setModalHistory] = useState([]);
-    const [activePanel, setActivePanel] = useState("feed");
-    const [history, setHistory] = useState(["feed"]);
+    const [activePanel, setActivePanel] = useState(
+      window.location.hash !== null &&
+        window.location.hash !== undefined &&
+        window.location.hash !== ""
+        ? "subscriptions"
+        : "feed"
+    );
+    const [history, setHistory] = useState(
+      window.location.hash !== null &&
+        window.location.hash !== undefined &&
+        window.location.hash !== ""
+        ? ["subscriptions"]
+        : ["feed"]
+    );
     const [updated, setUpdated] = useState(false);
     const [snackbar, setSnackbarInService] = useState(null);
     const [tour, setTour] = useState(0);
@@ -194,27 +211,31 @@ const App = withAdaptivity(
             setActiveModal("tour7");
           }, 500);
         }
-
-        if (panel !== panelHistory[panel].slice(-1)[0])
-          window.history.pushState(
-            null,
-            null,
-            "/" +
-              panel +
+        if (platform !== "ios")
+          if (panel !== panelHistory[panel].slice(-1)[0])
+            window.history.pushState(
+              null,
+              null,
               "/" +
-              panelHistory[panel].slice(-1)[0] +
-              "?" +
-              window.location.href.slice(window.location.href.indexOf("?") + 1)
-          );
-        else
-          window.history.pushState(
-            null,
-            null,
-            "/" +
-              panel +
-              "?" +
-              window.location.href.slice(window.location.href.indexOf("?") + 1)
-          );
+                panel +
+                "/" +
+                panelHistory[panel].slice(-1)[0] +
+                "?" +
+                window.location.href.slice(
+                  window.location.href.indexOf("?") + 1
+                )
+            );
+          else
+            window.history.pushState(
+              null,
+              null,
+              "/" +
+                panel +
+                "?" +
+                window.location.href.slice(
+                  window.location.href.indexOf("?") + 1
+                )
+            );
       }
     };
 
@@ -238,7 +259,7 @@ const App = withAdaptivity(
           setPanelHistory(data);
         }
       });
-      if (pages.includes(panel))
+      if (platform !== "ios")
         window.history.pushState(
           null,
           null,
@@ -268,7 +289,7 @@ const App = withAdaptivity(
         });
       }
       if (data !== null) setGoData(data);
-      if (panel !== activePanel && !pages.includes(panel))
+      if (panel !== activePanel && !pages.includes(panel) && platform !== "ios")
         window.history.pushState(
           null,
           null,
@@ -726,6 +747,7 @@ const App = withAdaptivity(
           onClose={() => {
             setActiveModal(null);
           }}
+          className="serviceCard"
           icon={<Avatar mode="app" src={data.img} size={56} />}
           header={data.name}
           subheader={
@@ -789,16 +811,14 @@ const App = withAdaptivity(
           onClose={() => {
             setActiveModal(null);
           }}
-          settlingHeight={100}
+          dynamicContentHeight
           header={
             <ModalPageHeader
               right={
                 isDesktop ? (
                   ""
                 ) : (
-                  <PanelHeaderButton
-                    onClick={() => setActiveModal(null)}
-                  >
+                  <PanelHeaderButton onClick={() => setActiveModal(null)}>
                     <Icon24Dismiss />
                   </PanelHeaderButton>
                 )
@@ -823,16 +843,14 @@ const App = withAdaptivity(
           onClose={() => {
             setActiveModal(null);
           }}
-          settlingHeight={100}
+          dynamicContentHeight
           header={
             <ModalPageHeader
               right={
                 isDesktop ? (
                   ""
                 ) : (
-                  <PanelHeaderButton
-                    onClick={() => setActiveModal(null)}
-                  >
+                  <PanelHeaderButton onClick={() => setActiveModal(null)}>
                     <Icon24Dismiss />
                   </PanelHeaderButton>
                 )
@@ -848,19 +866,17 @@ const App = withAdaptivity(
 
         <ModalPage
           id="refLink"
+          dynamicContentHeight
           onClose={() => {
             setActiveModal(null);
           }}
-          settlingHeight={100}
           header={
             <ModalPageHeader
               right={
                 isDesktop ? (
                   ""
                 ) : (
-                  <PanelHeaderButton
-                    onClick={() => setActiveModal(null)}
-                  >
+                  <PanelHeaderButton onClick={() => setActiveModal(null)}>
                     <Icon24Dismiss />
                   </PanelHeaderButton>
                 )
@@ -879,16 +895,14 @@ const App = withAdaptivity(
           onClose={() => {
             setActiveModal(null);
           }}
-          settlingHeight={100}
+          dynamicContentHeight
           header={
             <ModalPageHeader
               right={
                 isDesktop ? (
                   ""
                 ) : (
-                  <PanelHeaderButton
-                    onClick={() => setActiveModal(null)}
-                  >
+                  <PanelHeaderButton onClick={() => setActiveModal(null)}>
                     <Icon24Dismiss />
                   </PanelHeaderButton>
                 )
@@ -902,21 +916,57 @@ const App = withAdaptivity(
           <Mailing openAction={openAction} setActiveModal={setActiveModal} />
         </ModalPage>
 
+        <ModalCard
+          id="donut"
+          onClose={() => {
+            setActiveModal(null);
+          }}
+          className="tw"
+          icon={<Icon56DonateOutline />}
+          header={"Подписка VK Donut"}
+          subheader={
+            "Пользователи без подписки могут подключить 3 сервиса одновременно, с подпиской - безлимитно. Помимо этого Вам откроются специальные сервисы, которые скрыты для обычных пользователей.\n\nКроме того, у Вас нет доступа к специальному чату для донов, где Вы можете подкинуть нам идею или просто пообщаться с разработчиком."
+          }
+          actions={
+            <Fragment>
+              <Button
+                style={{ marginTop: -20 }}
+                size="l"
+                mode="primary"
+                className="fixButton2"
+                target="_blank"
+                href="https://vk.com/donut/notificationsapp"
+              >
+                Оформить
+              </Button>
+            </Fragment>
+          }
+        />
+
+        <ModalCard
+          id="wallEvent"
+          onClose={() => {
+            setActiveModal(null);
+          }}
+          className="tw serviceCard"
+          icon={<Avatar mode="app" src={data.img} size={72} />}
+          header={data.header}
+          subheader={data.subheader + "\n\nДата публикации: " + data.time}
+        />
+
         <ModalPage
           id="contentMakerRequest"
           onClose={() => {
             setActiveModal(null);
           }}
-          settlingHeight={100}
+          dynamicContentHeight
           header={
             <ModalPageHeader
               right={
                 isDesktop ? (
                   ""
                 ) : (
-                  <PanelHeaderButton
-                    onClick={() => setActiveModal(null)}
-                  >
+                  <PanelHeaderButton onClick={() => setActiveModal(null)}>
                     <Icon24Dismiss />
                   </PanelHeaderButton>
                 )
@@ -935,16 +985,14 @@ const App = withAdaptivity(
           onClose={() => {
             setActiveModal(null);
           }}
-          settlingHeight={100}
+          dynamicContentHeight
           header={
             <ModalPageHeader
               right={
                 isDesktop ? (
                   ""
                 ) : (
-                  <PanelHeaderButton
-                    onClick={() => setActiveModal(null)}
-                  >
+                  <PanelHeaderButton onClick={() => setActiveModal(null)}>
                     <Icon24Dismiss />
                   </PanelHeaderButton>
                 )
@@ -955,18 +1003,12 @@ const App = withAdaptivity(
             </ModalPageHeader>
           }
         >
-          <Placeholder
-            style={{ marginTop: -40 }}
-            icon={<Avatar mode="app" src={data.img} size={72} />}
-            header="Подключение Twitch"
-          >
-            Для подключения уведомлений введите имя пользователя, которого Вы
-            хотите отслеживать.
-          </Placeholder>
           <Twitch
+            img={data.img}
             isDesktop={isDesktop}
             openAction={openAction}
             setSnackbar={setSnackbar}
+            channel={data.channel}
             setActiveModal={setActiveModal}
           />
         </ModalPage>
@@ -976,16 +1018,14 @@ const App = withAdaptivity(
           onClose={() => {
             setActiveModal(null);
           }}
-          settlingHeight={100}
+          dynamicContentHeight
           header={
             <ModalPageHeader
               right={
                 isDesktop ? (
                   ""
                 ) : (
-                  <PanelHeaderButton
-                    onClick={() => setActiveModal(null)}
-                  >
+                  <PanelHeaderButton onClick={() => setActiveModal(null)}>
                     <Icon24Dismiss />
                   </PanelHeaderButton>
                 )
@@ -996,18 +1036,12 @@ const App = withAdaptivity(
             </ModalPageHeader>
           }
         >
-          <Placeholder
-            style={{ marginTop: -40 }}
-            icon={<Avatar mode="app" src={data.img} size={72} />}
-            header="Подключение YouTube"
-          >
-            Для подключения уведомлений введите ссылку на канал пользователя,
-            которого Вы хотите отслеживать.
-          </Placeholder>
           <YouTube
+            img={data.img}
             isDesktop={isDesktop}
             openAction={openAction}
             setSnackbar={setSnackbar}
+            channel_id={data.channel_id}
             setActiveModal={setActiveModal}
           />
         </ModalPage>
@@ -1017,16 +1051,14 @@ const App = withAdaptivity(
           onClose={() => {
             setActiveModal(null);
           }}
-          settlingHeight={100}
+          dynamicContentHeight
           header={
             <ModalPageHeader
               right={
                 isDesktop ? (
                   ""
                 ) : (
-                  <PanelHeaderButton
-                    onClick={() => setActiveModal(null)}
-                  >
+                  <PanelHeaderButton onClick={() => setActiveModal(null)}>
                     <Icon24Dismiss />
                   </PanelHeaderButton>
                 )
@@ -1037,15 +1069,9 @@ const App = withAdaptivity(
             </ModalPageHeader>
           }
         >
-          <Placeholder
-            style={{ marginTop: -40 }}
-            icon={<Avatar mode="app" src={data.img} size={72} />}
-            header="Подключение TikTok"
-          >
-            Для подключения уведомлений введите тег пользователя, которого Вы
-            хотите отслеживать.
-          </Placeholder>
           <TikTok
+            img={data.img}
+            channel={data.channel}
             isDesktop={isDesktop}
             openAction={openAction}
             setSnackbar={setSnackbar}
@@ -1161,7 +1187,7 @@ const App = withAdaptivity(
                     </Cell>
                   </Group>
                   <Footer style={{ marginTop: -10 }}>
-                    Версия приложения: 1.0.2 <br />
+                    Версия приложения: 1.0.5 <br />
                     Разработчик:{" "}
                     <a
                       href="https://vk.com/id172118960"
@@ -1250,7 +1276,11 @@ const App = withAdaptivity(
                   modal={modal}
                 >
                   <Panel id="rating">
-                    <Rating isDesktop={isDesktop} setSnackbar={setSnackbar} />
+                    <Rating
+                      setActiveModal={setActiveModal}
+                      isDesktop={isDesktop}
+                      setSnackbar={setSnackbar}
+                    />
                     {snackbar}
                   </Panel>
                 </View>
@@ -1326,9 +1356,6 @@ const App = withAdaptivity(
                       setActiveModal={setActiveModal}
                     />
                     {snackbar}
-                  </Panel>
-                  <Panel id="faq">
-                    <FAQ goBack={goBack} isDesktop={isDesktop} />
                   </Panel>
                 </View>
               </Epic>

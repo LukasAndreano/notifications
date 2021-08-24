@@ -5,15 +5,10 @@ import {
   RichCell,
   Avatar,
   Spinner,
-  Separator,
   Button,
   PanelHeader,
-  PanelHeaderButton,
 } from "@vkontakte/vkui";
-import {
-  Icon56NotificationOutline,
-  Icon28SettingsOutline,
-} from "@vkontakte/icons";
+import { Icon56NotificationOutline } from "@vkontakte/icons";
 import fetch2 from "../components/Fetch";
 
 /*eslint eqeqeq: "off"*/
@@ -39,6 +34,7 @@ export default function Subscriptions(props) {
       arr.push(
         <RichCell
           key={el.id}
+          className="serviceCard"
           before={<Avatar size={48} mode="app" src={el.img} />}
           caption={el.description}
           onClick={() =>
@@ -77,6 +73,19 @@ export default function Subscriptions(props) {
             JSON.stringify(data.response.notifications)
           );
           localStorage.setItem("settings", JSON.stringify(data.response.user));
+        } else {
+          setLoaded(true);
+        }
+      });
+    } else if (localStorage.getItem("updateSubscribtions") !== null) {
+      localStorage.removeItem("updateSubscribtions");
+      fetch2("loadNotifications").then((data) => {
+        if (data.response !== false) {
+          render(data.response.notifications);
+          localStorage.setItem(
+            "subscriptions",
+            JSON.stringify(data.response.notifications)
+          );
         } else {
           setLoaded(true);
         }
@@ -134,6 +143,26 @@ export default function Subscriptions(props) {
               setLoaded(true);
             }
           });
+          if (
+            window.location.hash !== null &&
+            window.location.hash !== undefined &&
+            window.location.hash !== "" &&
+            (localStorage.getItem("usedHash") === null ||
+              localStorage.getItem("usedHash") === undefined)
+          ) {
+            localStorage.setItem("usedHash", true);
+            fetch2(
+              "getContentMakerServices",
+              "tag=" + window.location.hash.substr(1)
+            ).then((data) => {
+              if (data.response !== "not_found" && data.response.length !== 0)
+                props.setActiveModal(
+                  "contentMakerServices",
+                  null,
+                  data.response
+                );
+            });
+          }
         }
       }
     }
@@ -141,24 +170,7 @@ export default function Subscriptions(props) {
 
   return (
     <Fragment>
-      <PanelHeader
-        left={
-          (settings.group_notifications != 0 ||
-            settings.notifications != 0) && (
-            <PanelHeaderButton
-              onClick={() =>
-                props.go("settings", {
-                  group_notifications: settings.group_notifications,
-                  notifications: settings.notifications,
-                })
-              }
-            >
-              <Icon28SettingsOutline />
-            </PanelHeaderButton>
-          )
-        }
-        separator={props.isDesktop ? true : false}
-      >
+      <PanelHeader separator={props.isDesktop ? true : false}>
         {props.isDesktop ? "Ваши подписки" : "Подписки"}
       </PanelHeader>
       <Group>
@@ -192,16 +204,36 @@ export default function Subscriptions(props) {
                         уведомить Вас, если что-то произойдет в том или ином
                         сервисе.
                       </Placeholder>
-                      <Separator />
                     </Fragment>
                   )}
-                <Placeholder
-                  header="Подключенные сервисы"
-                  style={{ marginBottom: -20, marginTop: -20 }}
-                >
-                  Здесь отображён список всех подключенных сервисов. Если Вы
-                  захотите отключить какой-либо сервис - просто нажмите на него.
-                </Placeholder>
+                {(settings.group_notifications != 0 ||
+                  settings.notifications != 0) && (
+                  <Placeholder
+                    header="Подключенные сервисы"
+                    style={{ marginBottom: -20, marginTop: -20 }}
+                  >
+                    Здесь отображён список всех подключенных сервисов. Если Вы
+                    захотите отключить какой-либо сервис - просто нажмите на
+                    него.
+                    <br />
+                    <br />
+                    Хотите изменить настройки получения уведомлений? Давайте
+                    перенаправим Вас в специальный раздел.
+                    <br />
+                    <Button
+                      size="m"
+                      style={{ marginTop: 10 }}
+                      onClick={() =>
+                        props.go("settings", {
+                          group_notifications: settings.group_notifications,
+                          notifications: settings.notifications,
+                        })
+                      }
+                    >
+                      Настройки уведомлений
+                    </Button>
+                  </Placeholder>
+                )}
                 {notifications}
               </Fragment>
             ) : (

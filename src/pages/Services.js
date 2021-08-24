@@ -24,6 +24,7 @@ export default function Services(props) {
       arr.push(
         <RichCell
           key={el.id}
+          className="serviceCard"
           before={<Avatar size={48} mode="app" src={el.img} />}
           caption={el.description}
           onClick={() => props.setActiveModal(String(el.id), { img: el.img })}

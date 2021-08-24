@@ -10,50 +10,36 @@ import { Icon56LikeOutline, Icon16Done } from "@vkontakte/icons";
 import fetch2 from "../components/Fetch";
 /*eslint no-useless-escape: "off"*/
 
-// eslint-disable-next-line
-Array.prototype.remove = function () {
-  var what,
-    a = arguments,
-    L = a.length,
-    ax;
-  while (L && this.length) {
-    what = a[--L];
-    while ((ax = this.indexOf(what)) !== -1) {
-      this.splice(ax, 1);
-    }
-  }
-  return this;
-};
-
 export default function ContentMakerServices(props) {
   const [loaded, setLoaded] = useState(false);
   const [list, setList] = useState([]);
   const [ids, setIds] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   // eslint-disable-next-line
   function render(data) {
-    let arr = [];
-    data.forEach((el) => {
-      if (!ids.indexOf(el.id) > -1) {
-        arr.push(
-          <RichCell
-            key={el.id}
-            before={<Avatar size={48} mode="app" src={el.img} />}
-            caption={el.title !== undefined ? el.title : ""}
-            onClick={() => {
-              if (!ids.indexOf(el.id) > -1) {
+    if (!loading) {
+      setLoading(true);
+      let arr = [];
+      data.forEach((el) => {
+        if (ids.indexOf(el.id) === -1) {
+          arr.push(
+            <RichCell
+              key={el.id}
+              before={<Avatar size={48} mode="app" src={el.img} />}
+              caption={el.title !== undefined ? el.title : ""}
+              onClick={() => {
                 fetch2(
                   "connectService",
                   "id=" + el.id + "&channel=" + el.channel + "&useTag=true"
-                ).then((data) => {
-                  if (data.response) {
+                ).then((dataFetch) => {
+                  localStorage.setItem("updateSubscribtions", true);
+                  if (dataFetch.response) {
                     localStorage.removeItem("subscriptions");
-                    let ids_array = ids.push(el.id);
-                    setIds(ids_array);
-                    render(props.data);
-                    if (ids.length === props.data.length) {
-                      props.setActiveModal(null);
-                    }
+                    let array = ids;
+                    array.push(el.id);
+                    setIds(array);
+                    render(data);
                     props.setSnackbar(
                       <Snackbar
                         layout="vertical"
@@ -72,30 +58,36 @@ export default function ContentMakerServices(props) {
                         Сервис добавлен в Ваши подписки
                       </Snackbar>
                     );
-                  } else if (data.message === "already_enabled") {
+                  } else if (dataFetch.message === "already_enabled") {
                     props.openAction(
                       "Уведомление",
                       "Вы уже получаете уведомления от этого пользователя."
                     );
                   }
                 });
-              }
-            }}
-          >
-            {el.name}
-          </RichCell>
-        );
-      }
-      setList(arr);
-      setLoaded(true);
-    });
+              }}
+            >
+              {el.name}
+            </RichCell>
+          );
+        }
+        if (ids.length === data.length) {
+          props.setActiveModal(null);
+        }
+        setTimeout(() => {
+          setList(arr);
+          setLoading(false);
+        }, 300);
+      });
+    }
   }
 
   useEffect(() => {
-    if (!loaded) {
+    if (!loaded && props.data.length !== 0) {
       render(props.data);
+      setLoaded(true);
     }
-  }, [props, loaded, render]);
+  }, [props, loaded, render, setLoaded]);
 
   return (
     <Group style={{ marginTop: -35 }}>
@@ -105,7 +97,8 @@ export default function ContentMakerServices(props) {
         style={{ marginBottom: -30 }}
       >
         Предлагаем Вам подписаться на нижеперечисленные каналы и тем самым
-        поддержать любимого любимого контент-мейкера.
+        поддержать любимого контент-мейкера. Не забудьте потом включить
+        уведомления в настройках!
       </Placeholder>
       {list}
     </Group>
