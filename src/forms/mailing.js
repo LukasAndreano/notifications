@@ -17,11 +17,11 @@ export default function Mailing(props) {
   const [disabled, setDisabled] = useState(false);
 
   return (
-    <Group style={{ marginTop: -35 }}>
+    <Group>
       <Placeholder
         icon={<Icon56MailOutline />}
         header="Создание рассылки"
-        style={{ marginBottom: -30 }}
+        style={{ marginBottom: -30, marginTop: -30 }}
       >
         Начните рассылку среди всех своих подписчиков, если нужно что-то
         сообщить. Уведомление придёт не только в личные сообщения, но также и в
@@ -47,7 +47,7 @@ export default function Mailing(props) {
       >
         <FormItem className="mb10">
           <Textarea
-            placeholder="Введите текст рассылки. Минимум - 50 символов, максимум - 4000."
+            placeholder="Введите текст рассылки. Минимум - 10 символов, максимум - 4000."
             maxLength="4000"
             value={text}
             required
@@ -62,7 +62,7 @@ export default function Mailing(props) {
             size="l"
             stretched
             type="submit"
-            disabled={text === "" || text.length < 50 || disabled}
+            disabled={text === "" || text.length < 10 || disabled}
           >
             {disabled ? "Начинаем..." : "Начать рассылку"}
           </Button>

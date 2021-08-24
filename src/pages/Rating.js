@@ -14,6 +14,7 @@ import {
 import {
   Icon28RefreshOutline,
   Icon16Done,
+  Icon16Verified,
   Icon56Stars3Outline,
 } from "@vkontakte/icons";
 import fetch2 from "../components/Fetch";
@@ -39,60 +40,96 @@ export default function Feed(props) {
     let i = 1;
     data.response.youtube.forEach((el) => {
       arr.push(
-        <a
-          href={"https://www.youtube.com/channel/" + el.data}
-          target="_blank"
-          rel="noreferrer"
+        <RichCell
           key={el.id}
+          onClick={() => {
+            props.setActiveModal("2", {
+              channel_id: "https://www.youtube.com/channel/" + el.data,
+              img: el.img,
+            });
+          }}
+          className="AvatarWithoutShadow"
+          before={
+            <Avatar size={48} mode="app">
+              <div className="TopPosition">{i}</div>
+              <span className="TopText" style={{ marginTop: -4 }}>
+                {el.description.substr(0, 1)}
+              </span>
+            </Avatar>
+          }
+          caption={"Подписчиков: " + el.count}
         >
-          <RichCell
-            before={<Avatar size={48} mode="app" src={el.img} />}
-            after={"#" + i}
-            caption={"Подписчиков в сервисе: " + el.count}
-          >
-            {el.description}
-          </RichCell>
-        </a>
+          <span style={{ display: "inline-flex" }}>
+            {el.description}{" "}
+            {el.verifed === 1 && (
+              <Icon16Verified className="verifyMark" fill="#71AAEB" />
+            )}
+          </span>
+        </RichCell>
       );
       i = i + 1;
     });
     i = 1;
     data.response.twitch.forEach((el) => {
       arr2.push(
-        <a
-          href={"https://twitch.tv/" + el.description}
-          target="_blank"
-          rel="noreferrer"
+        <RichCell
           key={el.id}
+          onClick={() => {
+            props.setActiveModal("1", {
+              channel: el.description,
+              img: el.img,
+            });
+          }}
+          className="AvatarWithoutShadow"
+          before={
+            <Avatar size={48} mode="app">
+              <div className="TopPosition">{i}</div>
+              <span className="TopText" style={{ marginTop: -4 }}>
+                {el.description.substr(0, 1)}
+              </span>
+            </Avatar>
+          }
+          caption={"Подписчиков: " + el.count}
         >
-          <RichCell
-            after={"#" + i}
-            before={<Avatar size={48} mode="app" src={el.img} />}
-            caption={"Подписчиков в сервисе: " + el.count}
-          >
-            {el.description}
-          </RichCell>
-        </a>
+          <span style={{ display: "inline-flex" }}>
+            {el.description}{" "}
+            {el.verifed === 1 && (
+              <Icon16Verified className="verifyMark" fill="#71AAEB" />
+            )}
+          </span>
+        </RichCell>
       );
       i = i + 1;
     });
     i = 1;
     data.response.tiktok.forEach((el) => {
       arr3.push(
-        <a
-          href={"https://www.tiktok.com/@" + el.description}
-          target="_blank"
-          rel="noreferrer"
+        <RichCell
           key={el.id}
+          onClick={() => {
+            props.setActiveModal("3", {
+              channel: el.description,
+              img: el.img,
+            });
+          }}
+          className="AvatarWithoutShadow"
+          before={
+            <Avatar size={48} mode="app">
+              <div className="TopPosition">{i}</div>
+              <span className="TopText" style={{ marginTop: -4 }}>
+                {el.description.substr(0, 1)}
+              </span>
+            </Avatar>
+          }
+          caption={"Подписчиков: " + el.count}
         >
-          <RichCell
-            after={"#" + i}
-            before={<Avatar size={48} mode="app" src={el.img} />}
-            caption={"Подписчиков в сервисе: " + el.count}
-          >
-            {el.description}
-          </RichCell>
-        </a>
+          <span style={{ display: "inline-flex" }}>
+            {el.description}{" "}
+            {el.verifed === 1 && (
+              <Icon16Verified className="verifyMark" fill="#71AAEB" />
+            )}
+          </span>
+        </RichCell>
       );
       i = i + 1;
     });

@@ -93,7 +93,16 @@ export default function Profile(props) {
                     }}
                   />
                 }
-                actions={<Button mode="overlay_primary">Подробнее</Button>}
+                actions={
+                  <Button
+                    mode="overlay_primary"
+                    onClick={() => {
+                      props.setActiveModal("donut");
+                    }}
+                  >
+                    Подробнее
+                  </Button>
+                }
               />
             )}
             <RichCell
@@ -228,16 +237,18 @@ export default function Profile(props) {
               expandable
               before={<Icon28LightbulbOutline />}
             >
-              Перепройти гайд
+              Пройти гайд
             </SimpleCell>
             <Header mode="secondary">Другое</Header>
-            <SimpleCell
-              onClick={() => props.go("faq")}
-              expandable
-              before={<Icon28QuestionOutline />}
+            <a
+              href="https://vk.com/@notificationsapp-start-guide"
+              target="_blank"
+              rel="noreferrer"
             >
-              Открыть FAQ
-            </SimpleCell>
+              <SimpleCell expandable before={<Icon28QuestionOutline />}>
+                Открыть FAQ
+              </SimpleCell>
+            </a>
             <a
               href="https://vk.com/club206215182"
               target="_blank"

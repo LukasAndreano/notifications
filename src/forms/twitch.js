@@ -8,6 +8,7 @@ import {
   Input,
   Footer,
   Snackbar,
+  Placeholder,
   Avatar,
 } from "@vkontakte/vkui";
 import { Icon16Done } from "@vkontakte/icons";
@@ -16,11 +17,22 @@ import { Icon16Done } from "@vkontakte/icons";
 import fetch2 from "../components/Fetch";
 
 export default function Twitch(props) {
-  const [channel, setChannel] = useState("");
+  const [channel, setChannel] = useState(
+    props.channel !== null && props.channel !== undefined ? props.channel : ""
+  );
   const [disabled, setDisabled] = useState(false);
 
   return (
-    <Group style={{ marginTop: -45 }}>
+    <Group>
+      <Placeholder
+        style={{ marginTop: -30, marginBottom: -30 }}
+        className="serviceCard"
+        icon={<Avatar mode="app" src={props.img} size={72} />}
+        header="Подключение Twitch"
+      >
+        Для подключения уведомлений введите имя пользователя, которого Вы хотите
+        отслеживать.
+      </Placeholder>
       <FormLayout
         onSubmit={(e) => {
           e.preventDefault();
@@ -55,6 +67,11 @@ export default function Twitch(props) {
                 );
                 localStorage.removeItem("subscriptions");
                 props.setActiveModal(null);
+              } else if (data.message === "limit") {
+                props.openAction(
+                  "Ошибка!",
+                  "Пользователи без подписки могут подключить максимум три сервиса."
+                );
               } else if (data.message === "already_enabled") {
                 props.openAction(
                   "Остановитесь!",
@@ -93,7 +110,11 @@ export default function Twitch(props) {
           </Button>
         </FormItem>
       </FormLayout>
-      <Footer style={{paddingLeft: 10, paddingRight: 10, marginTop: 0}}>Подсказка: регистр не имеет значения.<br/>Например, Вы можете ввести пользователя Sfory в ином регистре: sFoRY.</Footer>
+      <Footer style={{ paddingLeft: 10, paddingRight: 10, marginTop: 0 }}>
+        Подсказка: регистр не имеет значения.
+        <br />
+        Например, Вы можете ввести пользователя Sfory в ином регистре: sFoRY.
+      </Footer>
     </Group>
   );
 }

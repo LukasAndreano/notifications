@@ -19,11 +19,11 @@ export default function Request(props) {
   const [disabled, setDisabled] = useState(false);
 
   return (
-    <Group style={{ marginTop: -35 }}>
+    <Group>
       <Placeholder
         icon={<Icon56NotePenOutline />}
         header="Заявка на получение прав контент-мейкера"
-        style={{ marginBottom: -30 }}
+        style={{ marginBottom: -30, marginTop: -30 }}
       >
         После получение прав контент-мейкера Вы сможете создавать ссылки,
         перейдя по которым пользователи автоматически подпишутся на Вас, а также
@@ -72,7 +72,7 @@ export default function Request(props) {
         </FormItem>
         <FormItem className="mb10">
           <Textarea
-            placeholder="Перечислите площадки, на которых Вы создаёте контент (ссылки необходимы). Минимум 100 символов."
+            placeholder="Перечислите площадки, на которых Вы создаёте контент (ссылки необходимы). Минимум 50 символов."
             maxLength="3000"
             value={description}
             required
@@ -91,7 +91,7 @@ export default function Request(props) {
               name === "" ||
               name.length < 2 ||
               description === "" ||
-              description.length < 100 ||
+              description.length < 500 ||
               disabled
             }
           >
